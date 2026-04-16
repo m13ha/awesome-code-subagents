@@ -62,7 +62,8 @@ cd awesome-code-subagents
 | OpenCode | local | `.opencode/agents/` |
 | OpenCode | global | `~/.config/opencode/agents/` |
 
-Invoke agents with `@agent-name` in Copilot Chat or OpenCode.
+- **Copilot**: agents appear in the Chat agent picker — invoke with `@agent-name` in Copilot Chat.
+- **OpenCode**: installed agents are **subagents**, not modes. They do **not** appear in the Plan/Build mode selector. Invoke them by typing `@agent-name` in the chat prompt (e.g. `@backend-developer build a REST endpoint`). Run `opencode agent list` to confirm they are recognized.
 
 ### All options
 

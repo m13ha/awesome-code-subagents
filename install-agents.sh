@@ -264,24 +264,28 @@ case "$PLATFORM" in
   copilot)
     echo -e "${BOLD}GitHub Copilot:${NC}"
     if [[ "$SCOPE" == "local" ]]; then
-      echo "  Agents are in ${CYAN}$DEST/${NC}"
-      echo "  Open VS Code in this project — agents appear in the Chat agent picker."
+      echo -e "  Agents are in ${CYAN}$DEST/${NC}"
+      echo    "  Open VS Code in this project — agents appear in the Chat agent picker."
     else
-      echo "  Agents are in ${CYAN}$DEST/${NC}"
-      echo "  They will be available in VS Code across all projects."
+      echo -e "  Agents are in ${CYAN}$DEST/${NC}"
+      echo    "  They will be available in VS Code across all projects."
     fi
-    echo "  Invoke with ${CYAN}@agent-name${NC} in GitHub Copilot Chat."
+    echo -e "  Invoke with ${CYAN}@agent-name${NC} in GitHub Copilot Chat."
     ;;
   opencode)
     echo -e "${BOLD}OpenCode:${NC}"
     if [[ "$SCOPE" == "local" ]]; then
-      echo "  Agents are in ${CYAN}$DEST/${NC}"
-      echo "  Open OpenCode in this directory — subagents are available immediately."
+      echo -e "  Agents are in ${CYAN}$DEST/${NC}"
+      echo    "  Open OpenCode in this directory — subagents are available immediately."
     else
-      echo "  Agents are in ${CYAN}$DEST/${NC}"
-      echo "  Available in OpenCode across all projects."
+      echo -e "  Agents are in ${CYAN}$DEST/${NC}"
+      echo    "  Available in OpenCode across all projects."
     fi
-    echo "  Invoke with ${CYAN}@agent-name${NC} inline."
+    echo ""
+    echo -e "  ${BOLD}Note:${NC} These are ${BOLD}subagents${NC}, not modes."
+    echo    "  They do NOT appear in the Plan/Build mode selector."
+    echo -e "  To use them, type ${CYAN}@agent-name${NC} in the OpenCode chat prompt."
+    echo -e "  Example: ${CYAN}@backend-developer build a REST endpoint for user login${NC}"
     ;;
 esac
 echo ""
