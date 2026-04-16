@@ -12,37 +12,63 @@ A curated collection of **42 specialized agents** for [GitHub Copilot](https://d
 
 ## Quick Install
 
-### GitHub Copilot
+### Without cloning — one-liner (recommended)
+
+**GitHub Copilot**
 
 ```bash
-# Install all 42 agents for the current project
-./install-agents.sh --platform copilot --scope local
+# Install to the current project
+bash <(curl -sSL https://raw.githubusercontent.com/m13ha/awesome-code-subagents/main/install-agents.sh) \
+  --platform copilot --scope local
 
-# Install globally (available in every VS Code workspace)
-./install-agents.sh --platform copilot --scope global
+# Install globally (all VS Code workspaces)
+bash <(curl -sSL https://raw.githubusercontent.com/m13ha/awesome-code-subagents/main/install-agents.sh) \
+  --platform copilot --scope global
 ```
 
-Agents land in `.github/agents/` (local) or `~/.copilot/agents/` (global).  
-Invoke them with `@agent-name` in GitHub Copilot Chat.
-
-### OpenCode
+**OpenCode**
 
 ```bash
-# Install all 42 agents for the current project
-./install-agents.sh --platform opencode --scope local
+# Install to the current project
+bash <(curl -sSL https://raw.githubusercontent.com/m13ha/awesome-code-subagents/main/install-agents.sh) \
+  --platform opencode --scope local
 
 # Install globally
+bash <(curl -sSL https://raw.githubusercontent.com/m13ha/awesome-code-subagents/main/install-agents.sh) \
+  --platform opencode --scope global
+```
+
+> The script auto-detects it is running remotely and downloads only the 42 agent files — nothing else is fetched. `curl` must be available.
+
+### After cloning
+
+```bash
+git clone https://github.com/m13ha/awesome-code-subagents.git
+cd awesome-code-subagents
+
+# GitHub Copilot — current project
+./install-agents.sh --platform copilot --scope local
+
+# OpenCode — globally
 ./install-agents.sh --platform opencode --scope global
 ```
 
-Agents land in `.opencode/agents/` (local) or `~/.config/opencode/agents/` (global).  
-Invoke them with `@agent-name` inline in OpenCode.
+### Destination directories
 
-### Options
+| Platform | Scope | Path |
+|----------|-------|------|
+| GitHub Copilot | local | `.github/agents/` |
+| GitHub Copilot | global | `~/.copilot/agents/` |
+| OpenCode | local | `.opencode/agents/` |
+| OpenCode | global | `~/.config/opencode/agents/` |
+
+Invoke agents with `@agent-name` in Copilot Chat or OpenCode.
+
+### All options
 
 ```
-./install-agents.sh [--platform copilot|opencode] [--scope local|global]
-                    [--filter NAME] [--uninstall]
+install-agents.sh [--platform copilot|opencode] [--scope local|global]
+                  [--filter NAME] [--uninstall]
 ```
 
 | Flag | Description |
