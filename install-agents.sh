@@ -75,16 +75,18 @@ OPENCODE_GLOBAL="${XDG_CONFIG_HOME:-$HOME/.config}/opencode/agents"
 PLATFORM=""   # copilot | opencode
 SCOPE=""      # local | global
 UNINSTALL=false
+FORCE=false   # skip overwrite prompts (used by --update)
 FILTER=""     # optional agent name filter (substring)
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --platform)  PLATFORM="$2"; shift 2 ;;
-    --scope)     SCOPE="$2";    shift 2 ;;
-    --filter)    FILTER="$2";   shift 2 ;;
-    --uninstall) UNINSTALL=true; shift  ;;
+    --platform)       PLATFORM="$2"; shift 2 ;;
+    --scope)          SCOPE="$2";    shift 2 ;;
+    --filter)         FILTER="$2";   shift 2 ;;
+    --uninstall)      UNINSTALL=true; shift  ;;
+    --update|--force) FORCE=true;     shift  ;;
     --help|-h)
-      echo "Usage: $0 [--platform copilot|opencode] [--scope local|global] [--filter NAME] [--uninstall]"
+      echo "Usage: $0 [--platform copilot|opencode] [--scope local|global] [--filter NAME] [--uninstall] [--update]"
       exit 0 ;;
     *) echo -e "${RED}Unknown option: $1${NC}"; exit 1 ;;
   esac
@@ -215,7 +217,7 @@ if $REMOTE_MODE; then
     dest_file="$DEST/$name"
     url="$GITHUB_RAW/$REMOTE_SUBDIR/$name"
 
-    if [[ -f "$dest_file" ]]; then
+    if [[ -f "$dest_file" ]] && ! $FORCE; then
       read -rp "  $(echo -e "${YELLOW}↻${NC}") $name already exists. Overwrite? [y/N] " yn
       case "$yn" in
         [Yy]*) ;;
@@ -239,7 +241,7 @@ else
 
     dest_file="$DEST/$name"
 
-    if [[ -f "$dest_file" ]]; then
+    if [[ -f "$dest_file" ]] && ! $FORCE; then
       read -rp "  $(echo -e "${YELLOW}↻${NC}") $name already exists. Overwrite? [y/N] " yn
       case "$yn" in
         [Yy]*) ;;

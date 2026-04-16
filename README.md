@@ -65,19 +65,41 @@ cd awesome-code-subagents
 - **Copilot**: agents appear in the Chat agent picker — invoke with `@agent-name` in Copilot Chat.
 - **OpenCode**: installed agents are **subagents**, not modes. They do **not** appear in the Plan/Build mode selector. Invoke them by typing `@agent-name` in the chat prompt (e.g. `@backend-developer build a REST endpoint`). Run `opencode agent list` to confirm they are recognized.
 
+### Updating agents
+
+Re-run the same one-liner with `--update` to pull the latest versions of all agents without any prompts:
+
+```bash
+# Update all OpenCode agents globally
+bash <(curl -sSL https://raw.githubusercontent.com/m13ha/awesome-code-subagents/main/install-agents.sh) \
+  --platform opencode --scope global --update
+
+# Update all Copilot agents for the current project
+bash <(curl -sSL https://raw.githubusercontent.com/m13ha/awesome-code-subagents/main/install-agents.sh) \
+  --platform copilot --scope local --update
+```
+
+`--update` silently overwrites every existing agent file with the latest from GitHub. Combine with `--filter` to update a single agent:
+
+```bash
+bash <(curl -sSL https://raw.githubusercontent.com/m13ha/awesome-code-subagents/main/install-agents.sh) \
+  --platform opencode --scope global --update --filter backend-developer
+```
+
 ### All options
 
 ```
 install-agents.sh [--platform copilot|opencode] [--scope local|global]
-                  [--filter NAME] [--uninstall]
+                  [--filter NAME] [--uninstall] [--update]
 ```
 
 | Flag | Description |
 |------|-------------|
 | `--platform` | `copilot` or `opencode` |
 | `--scope` | `local` (project) or `global` (user home) |
-| `--filter` | Install only agents whose filename contains NAME |
+| `--filter` | Install/update only agents whose filename contains NAME |
 | `--uninstall` | Remove previously installed agents |
+| `--update` | Overwrite all existing agents without prompting (alias: `--force`) |
 
 ---
 
