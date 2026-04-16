@@ -1,103 +1,128 @@
-# Contributing to Awesome Claude Subagents
+# Contributing
 
-Thank you for your interest in contributing to this collection!
+Thank you for improving this collection! The goal is a tight set of **high-quality, focused agents** for GitHub Copilot and OpenCode.
 
-## 🤝 How to Contribute
+---
 
-### Adding a New Subagent
+## Adding a New Agent
 
-1. **Choose the right category** - Place your subagent in the most appropriate category folder
-2. **Test your subagent** - Ensure it works with Claude Code
-3. **Update required files** - When adding a new agent, you must update:
-   - **Main README.md**: Add your agent to the appropriate category section in alphabetical order
-   - **Category README.md**: Add detailed description, update Quick Selection Guide table, and if applicable, Common Technology Stacks
-   - **Your agent .md file**: Create the actual agent definition following the template
-4. **Submit a PR** - Include a clear description of the subagent's purpose
+### 1 — Choose a category
 
-### Subagent Requirements
+Place the source file in the right category under `categories/`:
 
-Each subagent should include:
-- Clear role definition
-- List of expertise areas
-- Required MCP tools (if any)
-- Communication protocol examples
-- Core capabilities
-- Example usage scenarios
-- Best practices
+| Dir | Focus |
+|-----|-------|
+| `01-core-development` | Full-stack, APIs, mobile, desktop, real-time |
+| `02-language-specialists` | Deep language/framework expertise |
+| `03-infrastructure` | Cloud, DevOps, networking, platforms |
+| `04-quality-security` | Testing, auditing, security, performance |
+| `05-data-ai` | Databases, ML/AI, prompting |
+| `06-developer-experience` | Tooling, docs, refactoring |
+| `07-specialized-domains` | Industry/domain-specific agents |
 
-### Required Updates When Adding a New Agent
+### 2 — Write the source file
 
-When you add a new agent, you MUST update these files:
+Create `categories/<category>/<agent-name>.md`. Use only `name` and `description` in the frontmatter — platform-specific keys are generated automatically.
 
-1. **Main README.md**
-   - Add your agent link in the appropriate category section
-   - Maintain alphabetical order
-   - Format: `- [**agent-name**](path/to/agent.md) - Brief description`
+```markdown
+---
+name: your-agent-name
+description: "Use this agent when <specific scenario>. Invoke when <trigger condition>."
+---
 
-2. **Category README.md** (e.g., `categories/02-language-specialists/README.md`)
-   - Add detailed agent description in the "Available Subagents" section
-   - Update the "Quick Selection Guide" table
-   - If applicable, add to "Common Technology Stacks" section
-   
-3. **Your Agent File** (e.g., `categories/02-language-specialists/your-agent.md`)
-   - Follow the standard template structure
-   - Include all required sections
+You are a <role> with expertise in <domain>. Your focus is <primary responsibility> with emphasis on <key quality>.
 
-### Versioning Requirements for Plugin Updates
+When invoked:
+1. <first step>
+2. <second step>
+3. <third step>
 
-When you modify existing plugin content, you MUST bump versions so users can receive updates via `claude plugin update`.
+<Core capabilities and checklist>
+```
 
-1. **Bump category plugin version**
-   - File: `categories/<category>/.claude-plugin/plugin.json`
-   - Increment `version` whenever any `*.md` file in that category changes.
+Rules:
+- **`name`** matches the filename (kebab-case, no spaces)
+- **`description`** is the invocation trigger — be specific about when vs. when not to use
+- No `tools:`, `model:`, or `permission:` keys in the source file — those are generated
+- Body should be self-contained: the agent gets no other context
 
-2. **Keep marketplace plugin versions in sync**
-   - File: `.claude-plugin/marketplace.json`
-   - Update the corresponding plugin entry version to match the category plugin version.
+### 3 — Regenerate platform files
 
-### Adding a Tool
+Run the generator to produce/update the Copilot and OpenCode variants:
 
-Tools are Claude Code skills that enhance the catalog experience (discovery, browsing, management).
+```bash
+python3 tools/gen_agents.py
+```
 
-1. **Create a folder** in `tools/` with your tool name
-2. **Include required files**:
-   - `README.md` - Installation and usage documentation
-   - Command files (`.md`) - One per command, with YAML frontmatter
-   - Helper scripts (`.sh`, `.py`) - Shared utilities if needed
-3. **Follow skill best practices**:
-   - Use descriptive `name` and `description` in frontmatter
-   - Include trigger phrases in descriptions
-   - Handle errors gracefully with user-friendly messages
-4. **Update the main README.md** - Add your tool to the 🧰 Tools section
-5. **Test locally** before submitting
+Or re-run the full generation manually:
 
-### Code of Conduct
+```bash
+# From repo root
+python3 - << 'EOF'
+# (paste gen_agents.py body here or run via tools/)
+EOF
+```
 
-- Be respectful and inclusive
-- Provide constructive feedback
-- Test contributions before submitting
-- Follow the existing format and structure
+The script reads `categories/` and writes:
+- `.github/agents/<name>.agent.md` — GitHub Copilot
+- `.opencode/agents/<name>.md` — OpenCode
 
-### Pull Request Process
+### 4 — Update the category README
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-subagent`)
-3. Add your subagent following the template
-4. Update ALL required locations:
-   - Main README.md (add to category section in alphabetical order)
-   - Category-specific README.md (add description, update tables)
-5. Verify all links work correctly
-6. Submit a pull request with a clear description
+Edit `categories/<category>/README.md`:
+- Add a row to the agents table (alphabetical order)
+- Add a row to the Quick Selection Guide
 
-### Quality Guidelines
+### 5 — Update the root README
 
-- Subagents should be well-structured and tested
-- Include clear documentation
-- Provide practical examples
-- Ensure compatibility with Claude Code
+Edit `README.md` and add the agent to its category table (alphabetical order).
 
-## 📝 License
+### 6 — Submit a PR
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+Include in your PR description:
+- What the agent does and when to use it
+- Which category it belongs to and why
+- A short example prompt that would invoke it
 
-All subagents in this repository are provided "as is" without warranty. The maintainers do not audit or guarantee the security or correctness of any contribution and accept no liability for any issues arising from their use.
+---
+
+## Modifying an Existing Agent
+
+1. Edit the source file in `categories/<category>/`
+2. Regenerate: `python3 tools/gen_agents.py`
+3. Verify frontmatter in `.github/agents/` and `.opencode/agents/` looks correct
+4. Submit PR with before/after sample of the changed behaviour
+
+---
+
+## Tool Permissions Reference
+
+The generator assigns tool permissions based on agent role. If your agent needs a different profile, update the sets in `tools/gen_agents.py`:
+
+| Profile | Agents | Copilot tools | OpenCode permission |
+|---------|--------|---------------|---------------------|
+| **full-access** | dev/eng agents | `read, edit, create, findFiles, search, runCommand` | `edit/bash/write: allow` |
+| **readonly** | audit/review agents | `read, findFiles, search` | `edit/bash/write: deny` |
+| **research** | docs/prompt agents | `read, findFiles, search, fetch, web` | `edit/bash/write: deny, webfetch: allow` |
+
+Model routing (OpenCode only):
+
+| Model | Agents |
+|-------|--------|
+| `anthropic/claude-opus-4-5` | `architect-reviewer`, `compliance-auditor`, `penetration-tester`, `security-auditor` |
+| `anthropic/claude-sonnet-4-5` | All others |
+
+---
+
+## Code of Conduct
+
+- Be specific — vague agents that overlap with existing ones won't be merged
+- Test before submitting — run the generator and check the output frontmatter
+- Keep descriptions honest — the description is the invocation trigger; make it accurate
+- One agent per PR — keeps reviews focused
+
+---
+
+## Questions?
+
+Open an issue with the label `question`.
