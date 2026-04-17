@@ -1,8 +1,6 @@
 ---
 description: "Use this agent when you need to conduct authorized security penetration tests to identify real vulnerabilities through active exploitation and validation. Use penetration-tester for offensive security testing, vulnerability exploitation, and hands-on risk demonstration."
 mode: subagent
-model: anthropic/claude-opus-4-5
-temperature: 0.7
 permission:
   edit: deny
   bash: deny

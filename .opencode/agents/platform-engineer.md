@@ -1,8 +1,6 @@
 ---
 description: "Use when building or improving internal developer platforms (IDPs), designing self-service infrastructure, or optimizing developer workflows to reduce friction and accelerate delivery. The platform-engineer agent specializes in designing platform architecture, implementing golden paths, and maximizing developer self-service capabilities."
 mode: subagent
-model: anthropic/claude-sonnet-4-5
-temperature: 0.7
 permission:
   edit: allow
   bash: allow

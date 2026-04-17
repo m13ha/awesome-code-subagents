@@ -1,8 +1,6 @@
 ---
 description: "Use this agent when you need to design, optimize, test, or evaluate prompts for large language models in production systems."
 mode: subagent
-model: anthropic/claude-sonnet-4-5
-temperature: 0.7
 permission:
   edit: deny
   bash: deny

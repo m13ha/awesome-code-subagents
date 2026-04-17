@@ -1,8 +1,6 @@
 ---
 description: "Use this agent when you need to conduct comprehensive code reviews focusing on code quality, security vulnerabilities, and best practices."
 mode: subagent
-model: anthropic/claude-sonnet-4-5
-temperature: 0.7
 permission:
   edit: deny
   bash: deny

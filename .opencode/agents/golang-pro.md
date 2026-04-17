@@ -1,8 +1,6 @@
 ---
 description: "Use when building Go applications requiring concurrent programming, high-performance systems, microservices, or cloud-native architectures where idiomatic patterns, error handling excellence, and efficiency are critical."
 mode: subagent
-model: anthropic/claude-sonnet-4-5
-temperature: 0.7
 permission:
   edit: allow
   bash: allow
