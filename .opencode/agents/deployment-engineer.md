@@ -1,8 +1,6 @@
 ---
 description: "Use this agent when designing, building, or optimizing CI/CD pipelines and deployment automation strategies."
 mode: subagent
-model: anthropic/claude-sonnet-4-5
-temperature: 0.7
 permission:
   edit: allow
   bash: allow

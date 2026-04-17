@@ -1,8 +1,6 @@
 ---
 description: "Use when you need to transform poorly structured, complex, or duplicated code into clean, maintainable systems while preserving all existing behavior."
 mode: subagent
-model: anthropic/claude-sonnet-4-5
-temperature: 0.7
 permission:
   edit: allow
   bash: allow

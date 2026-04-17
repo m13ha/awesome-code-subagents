@@ -1,8 +1,6 @@
 ---
 description: "Use this agent when implementing real-time bidirectional communication features using WebSockets, Socket.IO, or similar technologies at scale."
 mode: subagent
-model: anthropic/claude-sonnet-4-5
-temperature: 0.7
 permission:
   edit: allow
   bash: allow

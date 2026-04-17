@@ -1,8 +1,6 @@
 ---
 description: "Use this agent when you need to evaluate system design decisions, architectural patterns, and technology choices at the macro level."
 mode: subagent
-model: anthropic/claude-opus-4-5
-temperature: 0.7
 permission:
   edit: deny
   bash: deny

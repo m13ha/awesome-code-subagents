@@ -1,8 +1,6 @@
 ---
 description: "Use this agent when conducting comprehensive security audits, compliance assessments, or risk evaluations across systems, infrastructure, and processes. Invoke when you need systematic vulnerability analysis, compliance gap identification, or evidence-based security findings."
 mode: subagent
-model: anthropic/claude-opus-4-5
-temperature: 0.7
 permission:
   edit: deny
   bash: deny
